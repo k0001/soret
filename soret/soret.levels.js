@@ -8,25 +8,29 @@ if (typeof(Soret) == "undefined")
     Soret = {};
 
 Soret.LEVELS = [
-    {
-        input: "Hello",
-        output: "Hell"
+/*    {
+        input: "I say gelatin and you say goodbye",
+        output: "I say hello and you say goodbye",
     },
     {
-        input: "Javaschrist",
-        output: "Javascript"
+        input: "All you need is grapefruits, all you need is grapefruits",
+        output: "All you need is love, all you need is love"
     },
     {
-        input: "asdfasdfaasdf",
-        output: "sdfsdfsdf"
-    },
+        input: "Jeremy spoke in the class today",
+        output: "Jeremy spoke in class today"
+    },*/
     {
-        input: "asdf1asdf2asdf3asdf4asdf",
-        output: "asdfasdfasdfasdfasdf"
+        input: "And my spuurut us cryuuung for leavuung",
+        output: "And my spirit is crying for leaving"
     },
     {
         input: "asdf\nasdf\nasdf",
         output: "asd\nasd\nasd"
+    },
+    {
+        input: "fin",
+        output: "fin"
     }
 ];
 

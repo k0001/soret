@@ -21,6 +21,7 @@ Soret.load_level = function(level) {
     document.title = "Level " + level;
     $("#input").text(Soret.LEVELS[level].input);
     $("#output").text(Soret.LEVELS[level].output);
+    $("#midput").text("Keep trying!");
 };
 
 Soret.load_next_level = function() {
