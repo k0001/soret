@@ -1,0 +1,9 @@
+Estaría bueno que haya una ayuda opcional en cada nivel y que, dentro de lo posible, esté hecha de forma tal que todo el juego sirva como un tutorial sin que la susodicha ayuda sea engorrosa. Acá van las que me parecen convenientes para cada nivel, modificalas y metelas en el código como gustes. (También estaría bueno tenerlas tanto en español como en inglés, pero eso por ahora no es prioridad.)
+
+Nivel 1: El uso más básico de las expresiones regulares es reemplazar una cadena por otra. Para ello hacemos s/<cadena_anterior>/<cadena_nueva>/
+
+Nivel 2: Si la cadena que queremos reemplazar aparece más de una vez en la línea en la que estamos trabajando, usamos el modificador 'g': s/<cadena_anterior>/<cadena_nueva>/g
+
+Nivel 3: Para eliminar la aparición de una cadena, simplemente dejamos vacía la parte correspondiente a la cadena nueva: s/<cadena_a_eliminar>//
+
+Nivel 4: 
