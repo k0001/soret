@@ -3,7 +3,6 @@
     Copyright (c) 2009, Renzo Carbonara <gnuk0001@gmail.com>.  All rights reserved.
     See COPYING file distributed along with this file for licensing terms.
 */
-
 if (typeof(Soret) == "undefined")
     Soret = {};
 
@@ -14,6 +13,10 @@ Soret.check_solution = function(regex, repl, level) {
     return Soret.LEVELS[level].input.replace(regex, repl) == Soret.LEVELS[level].output;
 };
 
+Soret.process_regex = function(regex, repl) {
+    return Soret.LEVELS[level].input.replace(regex, repl)
+}
+
 Soret.load_level = function(level) {
     if (level >= Soret.LEVELS.length)
         throw "Soret.InvalidLevel";
@@ -21,7 +24,7 @@ Soret.load_level = function(level) {
     document.title = "Level " + level;
     $("#input").text(Soret.LEVELS[level].input);
     $("#output").text(Soret.LEVELS[level].output);
-    $("#midput").text("Keep trying!");
+    $("#result").hide();
 };
 
 Soret.load_next_level = function() {

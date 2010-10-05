@@ -8,7 +8,7 @@ if (typeof(Soret) == "undefined")
     Soret = {};
 
 Soret.LEVELS = [
-/*    {
+    {
         input: "I say gelatin and you say goodbye",
         output: "I say hello and you say goodbye",
     },
@@ -19,7 +19,7 @@ Soret.LEVELS = [
     {
         input: "Jeremy spoke in the class today",
         output: "Jeremy spoke in class today"
-    },*/
+    },
     {
         input: "And my spuurut us cryuuung for leavuung",
         output: "And my spirit is crying for leaving"
