@@ -5,15 +5,12 @@
 */
 
 $(document).ready(function() {
-    var initial_level = 0; // Used for debug
-    Soret.load_level(initial_level);
+    Soret.load_level(0);
 
     $("#try").click(function(e) {
-        var m = $("#regex").val().match(/^(.*?[^\\/])\/(.*?[^\\/]?)\/(.*[^\\/])/);
-        var pattern = m[1], repl = m[2], mods = m[3];
-//        var result = Soret.process_regex(new RegExp(pattern,mods), repl);
+        var pattern = $("#pattern").val(), repl = $("#repl").val(), mods = $("#mods").val();
+
         if (Soret.check_solution(new RegExp(pattern, mods), repl)) {
-//        if (result == Soret.LEVELS[Soret._current_level].output) {
             try {
                 Soret.load_next_level();
             } catch(err) {
@@ -22,12 +19,16 @@ $(document).ready(function() {
                 else
                     throw err;
             }
-            $("#regex").val("");
-            $("#regex").focus();
+            $("#pattern").val("");
+            $("#repl").val("");
+            $("#mods").val("");
+            $("#pattern").focus();
+
             console.log("Yes!");
         } else {
             $("#result").show();
             $("#wrongOutput").text("Wrong!");
+
             console.log("Not!");
         }
     });
