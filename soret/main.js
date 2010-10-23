@@ -4,13 +4,16 @@
     See COPYING file distributed along with this file for licensing terms.
 */
 
+
 $(document).ready(function() {
     Soret.load_level(0);
 
     $("#try").click(function(e) {
         var pattern = $("#pattern").val(), repl = $("#repl").val(), mods = $("#mods").val();
 
-        if (Soret.check_solution(new RegExp(pattern, mods), repl)) {
+        var solution = Soret.get_solution();
+        var answer = Soret.process_regex(new RegExp(pattern, mods), repl);
+        if (solution == answer) {
             try {
                 Soret.load_next_level();
             } catch(err) {
@@ -27,7 +30,7 @@ $(document).ready(function() {
             console.log("Yes!");
         } else {
             $("#result").show();
-            $("#wrongOutput").text("Wrong!");
+            $("#wrongOutput").text(answer);
 
             console.log("Not!");
         }
