@@ -6,26 +6,14 @@
 if (typeof(Soret) == "undefined")
     Soret = {};
 
-
-//Soret.check_solution = function(regex, repl, level) {
-//    var level = level || Soret._current_level;
-//    if (level >= Soret.LEVELS.length)
-//        throw "Soret.InvalidLevel";
-//    var answer = Soret.LEVELS[level].input.replace(regex, repl);
-//    //return answer == Soret.LEVELS[level].output;
-//    return answer;
-//};
-
-Soret.get_solution = function(level) {
+Soret.get_expected_output = function(level) {
     var level = level || Soret._current_level;
     if (level >= Soret.LEVELS.length)
         throw "Soret.InvalidLevel";
-    //var answer = Soret.LEVELS[level].input.replace(regex, repl);
-    //return answer == Soret.LEVELS[level].output;
     return Soret.LEVELS[level].output;
 };
 
-Soret.process_regex = function(regex, repl) {
+Soret.sub = function(regex, repl) {
     var level = Soret._current_level;
     return Soret.LEVELS[level].input.replace(regex, repl);
 };

@@ -11,9 +11,10 @@ $(document).ready(function() {
     $("#try").click(function(e) {
         var pattern = $("#pattern").val(), repl = $("#repl").val(), mods = $("#mods").val();
 
-        var solution = Soret.get_solution();
-        var answer = Soret.process_regex(new RegExp(pattern, mods), repl);
-        if (solution == answer) {
+        var user_output = Soret.sub(new RegExp(pattern, mods), repl);
+        var expected_output = Soret.get_expected_output();
+
+        if (user_output == expected_output) {
             try {
                 Soret.load_next_level();
             } catch(err) {
@@ -30,7 +31,7 @@ $(document).ready(function() {
             console.log("Yes!");
         } else {
             $("#result").show();
-            $("#wrongOutput").text(answer);
+            $("#wrongOutput").text(user_output);
 
             console.log("Not!");
         }
