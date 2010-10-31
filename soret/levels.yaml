@@ -1,0 +1,11 @@
+- title: Level 0
+  type: match
+  intro: |
+    Regular Expressions are used for text pattern matching and substitution.
+
+    In the simplest form, the character string to be matched is used as the
+    full regular expression itself.
+  instructions: Find every ocurrence of ``cat``.
+  input: "The cat is under the table."
+  matches:
+    - ['cat', 4, 7]

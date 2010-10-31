@@ -1,0 +1,3 @@
+rvm install ruby-1.9.2-head
+rvm use ruby-1.9.2-head@soret
+gem install haml json kramdown rack sinatra
