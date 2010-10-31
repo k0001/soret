@@ -1,4 +1,22 @@
 - content_for :scripts do
   %script{ type: 'javascript', src: '/static/js/index.js' }
 
+#levels
+  - @levels.each_with_index do |l, i|
+    %div.level(id="level-#{i}")
+      %span.title= l['title']
+
+      - if i == @current_level
+        %div.intro= l['intro']
+        %div.instructions= l['instructions']
+        %form#work
+          %fieldset
+            %label(for="match") Match
+            %input#match(type="text" name="match")
+            - if l['type'] == 'sub'
+              %label(for="repl") Replacement
+              %input#repl(type="text" name="repl")
+            %label(for="mods") Mods
+            %input#mods(type="text" name="mods")
+          %button#try Try
 

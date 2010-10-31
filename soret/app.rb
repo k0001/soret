@@ -11,6 +11,7 @@ LEVELS_YAML_PATH = File.dirname(__FILE__) + '/levels.yaml'
 module Soret
 
   class App < Sinatra::Base
+    set :sessions, true
     set :app_file, __FILE__
     set :haml, format: :html5
 
@@ -19,6 +20,8 @@ module Soret
     @@levels = Levels.new LEVELS_YAML_PATH
 
     get '/' do
+      @levels = @@levels.all
+      @current_level = 0 # XXX dynamicize this
       haml :index, locals: { title: 'Index' }
     end
 
