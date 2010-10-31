@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'sinatra/base'
+require 'sinatra/content_for'
 require 'haml'
 require 'json'
 require_relative 'lib/levels'
@@ -12,6 +13,8 @@ module Soret
   class App < Sinatra::Base
     set :app_file, __FILE__
     set :haml, format: :html5
+
+    helpers Sinatra::ContentFor
 
     @@levels = Levels.new LEVELS_YAML_PATH
 
