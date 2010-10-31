@@ -16,6 +16,9 @@
             - if l['type'] == 'sub'
               %label(for="repl") Replacement
               %input#repl(type="text" name="repl")
+            - else
+              %label(for="repl" style="display:none") Replacement
+              %input#repl(type="text" name="repl" style="display:none")
             %label(for="mods") Mods
             %input#mods(type="text" name="mods")
           %button#try Try
