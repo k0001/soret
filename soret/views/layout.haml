@@ -4,7 +4,7 @@
     %meta{ :'http-equiv' => "Content-Type", :content => "text/html; charset=utf-8" }
     %title #{title} | Soret
     =yield_content :styles
-  %body
+  %body{ :id => @body_id }
     #main
       =yield
   =yield_content :scripts
