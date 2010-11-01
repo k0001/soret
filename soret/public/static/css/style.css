@@ -6,12 +6,19 @@ body {
   font-family: sans; }
 
 body#work #levels .level .title {
+  font-weight: bold;
   display: block;
   padding: 0.6em;
   background: #444444;
-  color: #cccccc; }
+  color: #cccccc;
+  cursor: pointer; }
+  body#work #levels .level .title:hover {
+    color: white; }
 body#work #levels .level.active .title {
-  background: white;
-  color: #333333;
+  background: #cccccc;
+  color: #444444;
   padding-top: 1.6em;
-  padding-bottom: 1.6em; }
+  padding-bottom: 1.6em;
+  cursor: default; }
+body#work #levels .level.active:hover {
+  color: inherit; }

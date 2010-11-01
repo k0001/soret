@@ -24,7 +24,7 @@ module Soret
       @current_level = 0 # XXX dynamicize this
       @body_id = 'work'
       @title = 'Index'
-      haml :index
+      haml :work
     end
 
     get '/ws/levels' do

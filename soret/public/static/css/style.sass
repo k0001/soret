@@ -9,14 +9,21 @@ body#work
   #levels
     .level
       .title
+        font-weight: bold
         display: block
         padding: .6em
         background: #444
         color: #ccc
+        cursor: pointer
+        &:hover
+          color: #fff
       &.active
         .title
-          background: #fff
-          color: #333
+          background: #ccc
+          color: #444
           padding-top: 1.6em
           padding-bottom: 1.6em
+          cursor: default
+        &:hover
+          color: inherit
 
