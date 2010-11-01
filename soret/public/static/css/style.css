@@ -1,5 +1,15 @@
-pre {
-    background: #eef;
-    margin: 20px;
-}
+html * {
+  margin: 0;
+  padding: 0; }
 
+body#work #levels .level .title {
+  display: block;
+  padding: 0.6em;
+  background: #444444;
+  color: #cccccc; }
+body#work #levels .level.active {
+  background: white;
+  color: #333333; }
+  body#work #levels .level.active .title {
+    padding-top: 1.6em;
+    padding-bottom: 1.6em; }
