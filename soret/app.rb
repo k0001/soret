@@ -22,7 +22,9 @@ module Soret
     get '/' do
       @levels = @@levels.all
       @current_level = 0 # XXX dynamicize this
-      haml :index, locals: { title: 'Index' }
+      @body_id = 'work'
+      @title = 'Index'
+      haml :index
     end
 
     get '/ws/levels' do
