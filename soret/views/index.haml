@@ -1,13 +1,18 @@
 - content_for :scripts do
-  %script(type="javascript" src="/static/js/index.js")
+  %script(type="application/javascript" src="/static/js/index.js")
+  :javascript
 
 #levels
+  - @levels.each_with_index do |l, i|
+    %div(class="level #{l['type']} #{ i == @current_level ? 'active' : '' }"
+         data-level="#{i}")
+      %span.title= l['title']
 
 #levels-templates(style="display:none")
   / I don't think is the OMG-HOW-COOLest solution, but it works :)
 
   / a 'match' level
-  %div(class="level match" id="template-level-match")
+  %div(id="template-level-match")
     %span.title TITLE
     %div.intro INTRO
     %div.instructions INSTRUCTIONS
@@ -27,7 +32,7 @@
       %button#match-try Try
 
   / a sub level
-  %div(class="level sub" id="template-level-sub")
+  %div(id="template-level-sub")
     %span.title TITLE
     %div.intro INTRO
     %div.instructions INSTRUCTIONS

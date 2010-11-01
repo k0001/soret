@@ -13,7 +13,7 @@ module Soret
   class App < Sinatra::Base
     set :sessions, true
     set :app_file, __FILE__
-    set :haml, format: :html5
+    set :haml, { format: :html5, attr_wrapper: '"' }
 
     helpers Sinatra::ContentFor
 

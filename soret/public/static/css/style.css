@@ -2,14 +2,16 @@ html * {
   margin: 0;
   padding: 0; }
 
+body {
+  font-family: sans; }
+
 body#work #levels .level .title {
   display: block;
   padding: 0.6em;
   background: #444444;
   color: #cccccc; }
-body#work #levels .level.active {
+body#work #levels .level.active .title {
   background: white;
-  color: #333333; }
-  body#work #levels .level.active .title {
-    padding-top: 1.6em;
-    padding-bottom: 1.6em; }
+  color: #333333;
+  padding-top: 1.6em;
+  padding-bottom: 1.6em; }
