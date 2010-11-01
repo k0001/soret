@@ -1,11 +1,30 @@
-- title: Level 0
+- title: Hello World
   type: match
   intro: |
     Regular Expressions are used for text pattern matching and substitution.
 
     In the simplest form, the character string to be matched is used as the
     full regular expression itself.
-  instructions: Find every ocurrence of ``cat``.
-  input: "The cat is under the table."
+  instructions: Find who are we sayng "Hello" to.
+  text: "Hello World"
   matches:
-    - ['cat', 4, 7]
+    - ['World', 6, 11]
+  links:
+    Hello World: http://en.wikipedia.org/wiki/Hello_world_program
+
+- title: Magical Mistery
+  type: sub
+  intro: |
+    Think of the Regular Expressions substitutions like a powered-up version
+    of the old *search and replace* tool on basic text editors. In the simplest
+    form, the matched pattern is replaced with a given string.
+  instructions: |
+    The Beatles won\'t let us say ``Hello World``!
+
+    Help us, replace ``Goodbye`` with ``World``.
+  text: "Hello Goodbye"
+  expected: "Hello World"
+  matches:
+    - ['Goodbye', 6, 13]
+  links:
+    Hello, Goodbye: http://es.wikipedia.org/wiki/Hello,_Goodbye
