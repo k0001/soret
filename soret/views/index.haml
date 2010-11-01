@@ -1,21 +1,50 @@
 - content_for :scripts do
-  %script{ type: 'javascript', src: '/static/js/index.js' }
+  %script(type="javascript" src="/static/js/index.js")
 
 #levels
-  - @levels.each_with_index do |l, i|
-    %div.level(id="level-#{i}")
-      %span.title= l['title']
 
-      - if i == @current_level
-        %div.intro= l['intro']
-        %div.instructions= l['instructions']
-        %form#work
-          %fieldset
-            %label(for="match") Match
-            %input#match(type="text" name="match")
-            %label(for="repl" style="#{ l['type'] != 'sub' ? 'display:none' : '' }" ) Replacement
-            %input#repl(type="text" name="repl" style="#{ l['type'] != 'sub' ? 'display:none' : '' }" )
-            %label(for="mods") Mods
-            %input#mods(type="text" name="mods")
-          %button#try Try
+#levels-templates(style="display:none")
+  / I don't think is the OMG-HOW-COOLest solution, but it works :)
+
+  / a 'match' level
+  %div(class="level match" id="template-level-match")
+    %span.title TITLE
+    %div.intro INTRO
+    %div.instructions INSTRUCTIONS
+    %dl.what
+      %dt.original-text Original Text
+      %dd.original-text
+        %pre ORIGINAL TEXT
+      %dt.expected-match Expected Match
+      %dd.expected-match
+        %pre EXPECTED MATCH
+    %form.work
+      %fieldset
+        %label(for="match-field-match") Match
+        %input#match-field-match(type="text" name="match")
+        %label(for="match-field-mods") Mods
+        %input#match-field-mods(type="text" name="mods")
+      %button#try Try
+
+  / a sub level
+  %div(class="level sub" id="template-level-sub")
+    %span.title TITLE
+    %div.intro INTRO
+    %div.instructions INSTRUCTIONS
+    %dl.what
+      %dt.original-text Original Text
+      %dd.original-text
+        %pre ORIGINAL TEXT
+      %dt.expected-text Expected Text
+      %dd.expected-text
+        %pre EXPECTED Text
+    %form.work
+      %fieldset
+        %label(for="sub-field-match") Match
+        %input#sub-field-match(type="text" name="sub")
+        %label(for="sub-field-repl") Replacement
+        %input#sub-field-repl(type="text" name="repl")
+        %label(for="sub-field-mods") Mods
+        %input#sub-field-mods(type="text" name="mods")
+      %button#sub-try Try
 
