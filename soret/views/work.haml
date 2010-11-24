@@ -7,8 +7,9 @@
       Soret.pages.work.activate_level(#{@current_level});
     });
 
-#levels
-  - @levels.each_with_index do |l, i|
-    %div(class="level #{l['type']}" data-level="#{i}")
-      %span.title= l['title']
+%section#levels
+  - levels.all.each_with_index do |l, i|
+    %article(class="level #{l['type']}" data-level="#{i}")
+      %header
+        %h1&= l['title']
 

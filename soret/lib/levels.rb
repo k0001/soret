@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+require 'cgi'
 require 'psych'
 require 'kramdown'
 
@@ -7,7 +8,7 @@ module Soret
   class Levels
     def initialize(fname)
       load_yaml fname
-      parse_markdown
+      preload
     end
 
     def [](index)
@@ -25,10 +26,20 @@ module Soret
         end
       end
 
-      def parse_markdown
+      def preload
         @levels.each do |l|
           l['intro'] = Kramdown::Document.new(l['intro']).to_html
           l['instructions'] = Kramdown::Document.new(l['instructions']).to_html
+
+          # XXX this is ugly, and does not belong in here
+          matches_html = l['text'].dup
+          l['matches'].reverse.each do |text, ibegin, iend|
+            matches_html[iend...iend] = "{/MARK}"
+            matches_html[ibegin...ibegin] = "{MARK #{ibegin} #{iend}}"
+          end
+          l['matches_html'] = CGI.escapeHTML(matches_html)
+              .gsub(/{MARK (\d+) (\d+)}/, '<mark title="Match at [\1, \2]">')
+              .gsub(/{\/MARK}/, '</mark>')
         end
       end
   end

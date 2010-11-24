@@ -2,10 +2,10 @@
 %html
   %head
     %meta{ :'http-equiv' => "Content-Type", :content => "text/html; charset=utf-8" }
-    %title #{@title} | Soret
+    %title #{title} | Soret
     %link(rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen")
     =yield_content :styles
-  %body{ :id => @body_id }
+  %body{ :id => body_id }
     #main
       =yield
   =yield_content :scripts

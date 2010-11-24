@@ -1,0 +1,29 @@
+%article(class="level #{level['type']}" data-level="#{level_num}")
+  %header
+    %h1&= level['title']
+
+  %section.intro= level['intro']
+
+  %section.instructions
+    %div.instructions= level['instructions']
+    %div.changes
+      %div.original-text
+        %h2 Original Text
+        %pre= level['text']
+      %div.expected-matches
+        %h2 Expected Matches
+        %pre= level['matches_html']
+
+  %form.work
+    %fieldset
+      %label
+        Match
+        %input(name="match" type="text")
+      - if level['type'] == 'sub'
+        %label
+          Replacement
+          %input(name="repl" type="text")
+      %label
+        Modifiers
+        %input(name="mods" type="text")
+    %button.try= "Try"

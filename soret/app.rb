@@ -13,32 +13,73 @@ module Soret
   class App < Sinatra::Base
     set :sessions, true
     set :app_file, __FILE__
-    set :haml, { format: :html5, attr_wrapper: '"' }
+    set :haml, { :format        => :html5,
+                 :attr_wrapper  => '"'  }
 
     helpers Sinatra::ContentFor
 
     @@levels = Levels.new LEVELS_YAML_PATH
 
-    get '/' do
-      @levels = @@levels.all
-      @current_level = 0 # XXX dynamicize this
-      @body_id = 'work'
-      @title = 'Index'
-      haml :work
+    before do
+      @current_level = session['current_level'] ||= 0
     end
 
-    get '/ws/levels' do
-      levels = @@levels.all.each_with_index.map do |l, i|
-        { 'title' => l['title'],
-          'url'   => "/ws/levels/#{i}" }
+    ## Web Pages
+
+    get %{^/} do
+      haml :work,
+           :locals => { body_id: 'work',
+                        title: 'Index',
+                        levels: @@levels }
+    end
+
+    get %r{^/levels/(\d+)} do |level_num|
+      level_num = level_num.to_i
+      level = @@levels[level_num]
+      if level.nil?
+        return [404, "Invalid level #{level_num}"]
       end
-      out = { 'levels' => levels }
-      [200, {'Content-Type' => 'application/json'}, out.to_json]
+
+      if level_num > @current_level
+        return [403, "You haven't reached this level yet!"]
+      end
+
+      haml :single_level,
+           :layout => !request.xhr?,
+           :locals => { body_id: 'level',
+                        title: "Level #{level_num}",
+                        level_num: level_num,
+                        level: level }
     end
 
-    get '/ws/levels/:n' do
-      out = @@levels[params[:n].to_i]
-      [200, {'Content-Type' => 'application/json'}, out.to_json]
+
+    ## Web Service
+
+    get %r{^/ws/levels} do
+      levels = @@levels.all.each_with_index.map do |l, i|
+        { 'title' => l['title'], 'url' => "/ws/levels/#{i}" }
+      end
+
+      out = { 'status' => 'OK', 'payload' => { 'levels' => levels } }
+      return [200, {'Content-Type' => 'application/json'}, out.to_json]
+    end
+
+
+    get %r{^/ws/levels/(\d+)} do |level_num|
+      level_num = level_num.to_i
+      level = @@levels[level_num]
+      if level.nil?
+        out = { 'status' => 'ERROR', 'info' => "Invalid level #{level_num}" }
+        return [404, {'Content-Type' => 'application/json'}, out.to_json]
+      end
+
+      if level_num > @current_level
+        out = { 'status' => 'ERROR', 'info' => "You haven't reached this level yet!" }
+        return [403, {'Content-Type' => 'application/json'}, out.to_json]
+      end
+
+      out = { 'status' => 'OK', 'payload' => {'level' => level } }
+      return [200, {'Content-Type' => 'application/json'}, out.to_json]
     end
   end
 
