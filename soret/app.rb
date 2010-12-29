@@ -22,6 +22,7 @@ module Soret
 
     before do
       @current_level = session['current_level'] ||= 0
+      @current_level = 1
     end
 
     ## Web Pages
@@ -53,11 +54,11 @@ module Soret
     end
 
 
-    ## Web Service
+    ## API
 
-    get %r{^/ws/levels} do
+    get %r{^/api/0/levels} do
       levels = @@levels.all.each_with_index.map do |l, i|
-        { 'title' => l['title'], 'url' => "/ws/levels/#{i}" }
+        { 'title' => l['title'], 'url' => "/api/0/levels/#{i}" }
       end
 
       out = { 'status' => 'OK', 'payload' => { 'levels' => levels } }
@@ -65,7 +66,7 @@ module Soret
     end
 
 
-    get %r{^/ws/levels/(\d+)} do |level_num|
+    get %r{^/api/0/levels/(\d+)} do |level_num|
       level_num = level_num.to_i
       level = @@levels[level_num]
       if level.nil?
