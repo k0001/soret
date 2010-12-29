@@ -44,14 +44,15 @@ if (typeof Soret.pages == 'undefined')
                 } else {
                     var new_lel = $(xhr.responseText); // html
 
+                    if (lel)
+                        lel.replaceWith(new_lel)
+                    else
+                        $('#levels').prepend(new_lel);
+
                     __.deactivate_all();
                     new_lel.addClass('active');
-
-                    if (lel) {
-                        lel.replaceWith(new_lel)
-                    } else {
-                        $('#levels').prepend(new_lel);
-                    }
+                    new_lel.focus();
+                    location.hash = '#level-' + num;
 
                     $('> header', new_lel).click(function(e) {
                         __.activate_level($(this).parent().attr('data-level'));

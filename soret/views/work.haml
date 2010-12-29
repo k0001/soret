@@ -5,12 +5,22 @@
     $(document).ready(function() {
       Soret.pages.work.init();
       Soret.pages.work.set_last_level(#{@current_level});
-      Soret.pages.work.activate_level(#{@current_level});
+
+      var m = location.hash.match(/^#level-(\d+)$/);
+      if (m != null) {
+          var num_level = Number(m[1]);
+          if (num_level <= #{@current_level})
+              Soret.pages.work.activate_level(num_level);
+          else
+              Soret.pages.work.activate_level(#{@current_level});
+      } else {
+          Soret.pages.work.activate_level(#{@current_level});
+      }
     });
 
 %section#levels
   - levels.all[0..@current_level].each_with_index.to_a.reverse.each do |l, i|
-    %article(class="level #{l['type']}" data-level="#{i}")
+    %article(id="level-#{i}" class="level #{l['type']}" data-level="#{i}")
       %header
         %h1&= l['title']
 
