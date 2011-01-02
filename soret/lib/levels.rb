@@ -27,11 +27,23 @@ module Soret
       m = level['text'].match(rx)
       return false if m.nil?
 
-      return false if not m.captures.each_with_index.map { |x, i|
-        [x, m.begin(i+1), m.end(i+1)] == level['matches']
-      }.all?
+      matched = \
+        # if there is any grouping, will check against them
+        if not m.captures.empty?
+          m.captures.each_with_index.map do |x, i|
+            [x, m.begin(i+1), m.end(i+1)] == level['matches'][i]
+          end
+        # otherwise, will check against the full single match
+        else
+          m.to_a.each_with_index.map do |x, i|
+            [x, m.begin(i), m.end(i)] == level['matches'][i]
+          end
+        end
 
-      return true
+
+      puts matched
+
+      return false if not matched.all?
 
       # correct replacement?
       if level['type'] == 'sub'
