@@ -13,6 +13,10 @@
       %div.expected-matches
         %h2 Expected Matches
         %pre= level['matches_html']
+      - if level['type'] == 'sub'
+        %div.expected-text
+          %h2 Expected Text
+          %pre= level['expected']
 
   %form.work
     %fieldset
