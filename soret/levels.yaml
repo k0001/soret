@@ -65,7 +65,7 @@
   text: "Freedooooooooooooooooooooooooom"
   expected: "Freedom"
   matches:
-    - ['you are', 5, 30]
+    - ['ooooooooooooooooooooooooo', 5, 30]
   links:
     Braveheart: http://en.wikipedia.org/wiki/Braveheart
 
