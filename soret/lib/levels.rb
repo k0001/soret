@@ -11,12 +11,34 @@ module Soret
       preload
     end
 
-    def [](index)
-      @levels[index]
+    def [](level_num)
+      @levels[level_num]
     end
 
     def all
       @levels
+    end
+
+    def check(level_num, match, repl=nil, mods=nil)
+      level = self[level_num]
+
+      rx = Regexp.new match
+
+      m = level['text'].match(rx)
+      return false if m.nil?
+
+      return false if not m.captures.each_with_index.map { |x, i|
+        [x, m.begin(i+1), m.end(i+1)] == level['matches']
+      }.all?
+
+      return true
+
+      # correct replacement?
+      if level['type'] == 'sub'
+        return false if level['text'].gsub(rx, repl) != level['expected']
+      end
+
+      return true
     end
 
     private

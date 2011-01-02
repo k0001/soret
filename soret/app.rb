@@ -37,12 +37,8 @@ module Soret
     get %r{^/levels/(\d+)} do |level_num|
       level_num = level_num.to_i
       level = @@levels[level_num]
-      if level.nil?
+      if level.nil? or level_num > @current_level
         return [404, "Invalid level #{level_num}"]
-      end
-
-      if level_num > @current_level
-        return [403, "You haven't reached this level yet!"]
       end
 
       haml :single_level,
@@ -56,32 +52,37 @@ module Soret
 
     ## API
 
-    get %r{^/api/0/levels} do
-      levels = @@levels.all.each_with_index.map do |l, i|
-        { 'title' => l['title'], 'url' => "/api/0/levels/#{i}" }
-      end
-
-      out = { 'status' => 'OK', 'payload' => { 'levels' => levels } }
-      return [200, {'Content-Type' => 'application/json'}, out.to_json]
-    end
-
-
     get %r{^/api/0/levels/(\d+)} do |level_num|
       level_num = level_num.to_i
       level = @@levels[level_num]
-      if level.nil?
+      if level.nil? or level_num > @current_level
         out = { 'status' => 'ERROR', 'info' => "Invalid level #{level_num}" }
         return [404, {'Content-Type' => 'application/json'}, out.to_json]
-      end
-
-      if level_num > @current_level
-        out = { 'status' => 'ERROR', 'info' => "You haven't reached this level yet!" }
-        return [403, {'Content-Type' => 'application/json'}, out.to_json]
       end
 
       out = { 'status' => 'OK', 'payload' => {'level' => level } }
       return [200, {'Content-Type' => 'application/json'}, out.to_json]
     end
+
+    post %r{^/api/0/levels/(\d+)/check} do |level_num|
+      level_num = level_num.to_i
+      level = @@levels[level_num]
+      if level.nil? or level_num > @current_level
+        out = { 'status' => 'ERROR', 'info' => "Invalid level #{level_num}" }
+        return [404, {'Content-Type' => 'application/json'}, out.to_json]
+      end
+
+      # Security wise. 512 characters should be enough for our answers.
+      success = @@levels.check(level_num, params[:match][0..512],
+                                          params[:repl][0..512])
+
+      out = { 'status' => 'OK',
+              'payload' => {'success' => success,
+                            'level' => level,
+                            'next_level' => @@levels[level_num + 1] } }
+      return [200, {'Content-Type' => 'application/json'}, out.to_json]
+    end
+
   end
 
 end
