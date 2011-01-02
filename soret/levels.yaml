@@ -28,3 +28,84 @@
     - ['Goodbye', 6, 13]
   links:
     Hello, Goodbye: http://es.wikipedia.org/wiki/Hello,_Goodbye
+
+- title: Paranoid?
+  type: sub
+  intro: |
+    Don\'t think that spaces are special characters just because, in the previous
+    stages, the matches were single words. There's no difference at all between an
+    \'a\' and an space.
+  instructions: |
+    These lyrics are slightly wrong.
+
+    Fix them replacing ``you are`` with ``you're``.
+  text: "Just because you are paranoid don't mean they're not after you"
+  expected: "Just because you're paranoid don't mean they're not after you"
+  matches:
+    - ['you are', 13, 20]
+  links:
+    Come as you are: http://en.wikipedia.org/wiki/Come_as_You_Are_(Nirvana_song)
+
+- title: Freedom
+  type: sub
+  # XXX Part of this is copypasted from python-doc 2.7.1 Section 7.2 (re)
+  intro: |
+    The real power of Regular Expressions lies in the meta-characters. Don't be
+    scared by this long word: they're just characters that affect how the regular
+    expressions around them are interpreted.
+
+    One of these meta-characters is \'+\' (the plus sign), that stands for
+    "One or more times the preceding Regular Expression". Remember that, in
+    its simplest form, a Regular Expression is merely a letter (but things
+    will get more interesting soon).
+  instructions: |
+    Stop yelling, Wallace. Just say what you want.
+
+    Replace all that "oooo" with a single "o".
+  text: "Freedooooooooooooooooooooooooom"
+  expected: "Freedom"
+  matches:
+    - ['you are', 5, 30]
+  links:
+    Braveheart: http://en.wikipedia.org/wiki/Braveheart
+
+- title: As Time Goes By
+  type: sub
+  intro: |
+    Modifiers are options that alter the way in which Regular Expressions
+    work. Usually, they are specified as a group of single letters, each
+    one setting an option.
+
+    One of the most used of these options when doing substitutions is the
+    "replace every ocurrence" option, almost always represented by the
+    letter \'g\'.
+  instructions: |
+    Sam is not a dancer, he's a pianist. Make Sam play.
+  text: "Dance it, Sam. Dance \"As Time Goes By\""
+  expected: "Play it, Sam. Play \"As Time Goes By\""
+  matches:
+    - ['Dance', 0, 5]
+    - ['Dance', 15, 20]
+  links:
+    Casablanca: http://en.wikipedia.org/wiki/Casablanca_%28film%29
+
+- title: Buffalo
+  type: match
+  intro: |
+    Another important modifier is the "ignore case" one, often represented
+    by the letter \'i\'. When activated, an \'A\' is the same that an \'a\',
+    a \'B\' that a \'b\', etc. You get the picture.
+  instructions: |
+    Match every "buffalo" or "Buffalo" in this peculiar sentence.
+  text: "Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo"
+  matches:
+    - ['Buffalo', 0, 7]
+    - ['buffalo', 8, 15]
+    - ['Buffalo', 16, 23]
+    - ['buffalo', 24, 31]
+    - ['buffalo', 32, 39]
+    - ['buffalo', 40, 47]
+    - ['Buffalo', 48, 55]
+    - ['buffalo', 56, 63]
+  links:
+    Buffalo buffalo Buffalo: http://en.wikipedia.org/wiki/Buffalo_buffalo_Buffalo_buffalo_buffalo_buffalo_Buffalo_buffalo
