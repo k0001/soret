@@ -22,7 +22,7 @@ module Soret
 
     before do
       @current_level = session['current_level'] ||= 0
-      @current_level = 1
+    #  session['current_level'] = 0
     end
 
     ## Web Pages
@@ -56,7 +56,7 @@ module Soret
       level_num = level_num.to_i
       level = @@levels[level_num]
       if level.nil? or level_num > @current_level
-        out = { 'status' => 'ERROR', 'info' => "Invalid level #{level_num}" }
+        out = { 'status' => 'ENOTFOUND', 'info' => "Invalid level #{level_num}" }
         return [404, {'Content-Type' => 'application/json'}, out.to_json]
       end
 
@@ -64,23 +64,41 @@ module Soret
       return [200, {'Content-Type' => 'application/json'}, out.to_json]
     end
 
+    # XXX limit POST content size
     post %r{^/api/0/levels/(\d+)/check} do |level_num|
       level_num = level_num.to_i
       level = @@levels[level_num]
       if level.nil? or level_num > @current_level
-        out = { 'status' => 'ERROR', 'info' => "Invalid level #{level_num}" }
+        out = { 'status' => 'ENOTFOUND', 'info' => "Invalid level #{level_num}" }
         return [404, {'Content-Type' => 'application/json'}, out.to_json]
       end
 
-      # Security wise. 512 characters should be enough for our answers.
-      success = @@levels.check(level_num, params[:match][0..512],
-                                          params[:repl][0..512])
+      if params[:match].nil?
+        out = { 'status' => 'EINCOMPLETE', 'info' => "Missing argument 'match'" }
+        return [400, {'Content-Type' => 'application/json'}, out.to_json]
+      end
+
+      if level['type'] == 'sub' and params[:repl].nil?
+        out = { 'status' => 'EINCOMPLETE', 'info' => "Missing argument 'repl'" }
+        return [400, {'Content-Type' => 'application/json'}, out.to_json]
+      end
+
+      success = @@levels.check(level_num, params[:match], params[:repl], params[:mods])
+
+      if not success
+        out = { 'status' => 'EINVALID', 'info' => "Invalid answer." }
+        return [409, {'Content-Type' => 'application/json'}, out.to_json]
+      end
+
+      puts "x #{@current_level}, y #{level_num}"
+      if success and level_num == @current_level
+        session['current_level'] += 1
+      end
 
       out = { 'status' => 'OK',
-              'payload' => {'success' => success,
-                            'level' => level,
-                            'next_level' => @@levels[level_num + 1] } }
+              'payload' => { 'next_level' => @@levels[level_num + 1] } }
       return [200, {'Content-Type' => 'application/json'}, out.to_json]
+
     end
 
   end

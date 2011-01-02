@@ -35,7 +35,7 @@ if (typeof Soret.pages == 'undefined')
             return; // nothing to do, already active.
 
         $.ajax({
-            method: 'GET',
+            type: 'GET',
             url: '/levels/' + num,
             dataType: 'html', // response's
             complete: function(xhr, status) {
@@ -59,8 +59,11 @@ if (typeof Soret.pages == 'undefined')
                     });
 
                     $('> form.work button.try', new_lel).click(function(e) {
-                        console.log('awesome');
+                        e.stopPropagation();
                         e.preventDefault();
+
+                        var btn_try = $(this);
+                        btn_try.attr('disabled', 'disabled');
 
                         var answer = {
                             'match': $('input[name=match]', new_lel).val(),
@@ -71,21 +74,38 @@ if (typeof Soret.pages == 'undefined')
                         if (repl != null)
                             answer['repl'] = repl.val();
 
-                        if (__.check_level_answer(num, answer)) {
-                            var next_level = num + 1;
-                            if (next_level > __._last_level) {
-                                __.set_last_level(next_level);
-                                __.activate_level(next_level);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/0/levels/' + num + '/check',
+                            data: answer,
+                            dataType: 'json',
+                            complete: function(xhr, status) {
+                                btn_try.attr('disabled', '');
+                                try {
+                                    data = JSON.parse(xhr.responseText);
+                                } catch (e) {
+                                    if (e != 'SyntaxError')
+                                        console.error('Something went wrong! Please try again later. - ' + status);
+                                }
+                                if (data['status'] == 'OK') {
+                                    console.log('Great answer!');
+                                    // we check which is the 'next_level' just in case.
+                                    var next_level = data['payload']['next_level']['number'];
+                                    console.log(next_level, __._last_level);
+                                    __.set_last_level(next_level);
+                                    __.activate_level(next_level);
+                                } else if (data['status'] == 'EINVALID') {
+                                    console.log('Wrong answer.', + data['info'] || '');
+                                } else {
+                                    console.error('Something is wrong with your request. ' + data['info']);
+                                }
                             }
-                        }
+                        });
+
                     });
                 }
             }
         });
-    };
-
-    __.check_level_answer = function(num, answer) {
-        return true;
     };
 
 })(jQuery);

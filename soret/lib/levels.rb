@@ -45,6 +45,7 @@ module Soret
       def load_yaml(fname)
         File.open(fname) do |f|
           @levels = Psych.load f.read
+          @levels.each_with_index { |x, i| x['number'] = i }
         end
       end
 
